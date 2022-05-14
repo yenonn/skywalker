@@ -4,6 +4,7 @@ import time
 import socket
 from importlib import import_module
 from logger import LoggerFactory
+from envparse import env
 
 logger = LoggerFactory().Logger
 
@@ -27,7 +28,7 @@ Loading the given handler caller
 """
 
 
-def load_module(handler):
+def load_module(handler: str):
     caller = None
     if handler:
         pathname = ".".join(handler.split(".")[:-1])
@@ -62,7 +63,9 @@ return True/False
 
 
 def check_dns():
-    app_endpoint = os.getenv("APP_ENDPOINT")
-    if socket.gethostbyname_ex(app_endpoint):
-        pass
     return False
+
+
+def config(key: str):
+    env.read_envfile()
+    return env(key)
