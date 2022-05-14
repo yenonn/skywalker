@@ -4,7 +4,6 @@ from utils import config
 
 
 redis_cred = config("REDIS_CREDENTIAL")
-print(redis_cred)
 
 
 class FlaskFactory(metaclass=Singleton):
