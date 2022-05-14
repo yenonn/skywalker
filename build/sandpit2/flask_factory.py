@@ -4,6 +4,7 @@ from utils import config
 
 
 redis_cred = config("REDIS_CREDENTIAL")
+print(redis_cred)
 
 
 class FlaskFactory(metaclass=Singleton):
@@ -11,5 +12,5 @@ class FlaskFactory(metaclass=Singleton):
         self.app = Flask("FlaskFactory")
         self.app.config.update(
             CELERY_BROKER_URL=f"redis://default:{redis_cred}@redis-master:6379/0",
-            CELERY_RESULT_BACKEND="redis://default:{redis_cred}@redis-master:6379/0",
+            CELERY_RESULT_BACKEND=f"redis://default:{redis_cred}@redis-master:6379/0",
         )
