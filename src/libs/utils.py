@@ -66,6 +66,14 @@ def check_dns():
     return False
 
 
+"""
+Reading value from .env file or environment by given the key
+"""
+
+
 def config(key: str):
-    env.read_envfile()
-    return env(key)
+    if os.path.exists(".env"):
+        env.read_envfile()
+        return env(key)
+    if os.getenv(key):
+        return os.getenv(key)

@@ -25,8 +25,8 @@ def make_celery(app):
 redis_cred = config("REDIS_CREDENTIAL")
 flask_app = Flask(__name__)
 flask_app.config.update(
-    CELERY_BROKER_URL=f"redis://default:{redis_cred}@192.168.39.240:6379/0",
-    CELERY_RESULT_BACKEND=f"redis://default:{redis_cred}@192.168.39.240:6379/0",
+    CELERY_BROKER_URL=f"redis://default:{redis_cred}@redis-master:6379/0",
+    CELERY_RESULT_BACKEND=f"redis://default:{redis_cred}@redis-master:6379/0",
 )
 celery = make_celery(flask_app)
 
