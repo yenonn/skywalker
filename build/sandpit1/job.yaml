@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: python-job
+spec:
+  template:
+    spec:
+      volumes:
+      - name: python-src-volume
+        configMap:
+          defaultMode: 420
+          name: python-codes-configmap
+      - name: python-app-volume
+        emptyDir: {}
+      initContainers:
+      - args:
+        - base64 -d < /src/code > /tmp/func.decoded && unzip -o /tmp/func.decoded -d /app 
+        command:
+        - sh
+        - -c
+        image: skywalker/unzip:0.1
+        name: codes-preparing
+        volumeMounts:
+        - mountPath: /app
+          name: python-app-volume
+        - mountPath: /src
+          name: python-src-volume
+      containers:
+      - name: function
+        image: python 
+        command: 
+        - python
+        - /app/hello.py
+        volumeMounts:
+        - mountPath: /app
+          name: python-app-volume
+      restartPolicy: Never
+  backoffLimit: 4
