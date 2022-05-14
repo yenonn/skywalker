@@ -1,7 +1,8 @@
 from k8s_job_controller import Job as k8sjob
-from job_controller import Job as localjob
+from job_controller import run
 from celery import Celery, Task
 from flask import Flask
+import os
 
 
 def make_celery(app):
@@ -21,10 +22,11 @@ def make_celery(app):
     return celery
 
 
+redis_cred = os.getenv("REDIS_CREDENTIAL")
 flask_app = Flask(__name__)
 flask_app.config.update(
-    CELERY_BROKER_URL="redis://default:CvmvLA9aBT@192.168.39.240:6379/0",
-    CELERY_RESULT_BACKEND="redis://default:CvmvLA9aBT@192.168.39.240:6379/0",
+    CELERY_BROKER_URL=f"redis://default:{redis_cred}@192.168.39.240:6379/0",
+    CELERY_RESULT_BACKEND=f"redis://default:{redis_cred}@192.168.39.240:6379/0",
 )
 celery = make_celery(flask_app)
 
@@ -48,8 +50,7 @@ def execute_local_jobs():
         "job-name": "hello-skywalker",
         "python-codes-config": "hello-skywalker-config.json",
     }
-    local_job = localjob(config)
-    local_job.run()
+    run(config)
 
 
 @flask_app.route("/execute")
