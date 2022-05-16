@@ -1,0 +1,5 @@
+{
+    "name": "workflow-skywalker",
+    "executor": "executor.WorkflowExecutor",
+    "handler": ["hello-skywalker.main", "workflow-skywalker.main"]
+}
