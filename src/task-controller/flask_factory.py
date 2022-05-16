@@ -1,15 +1,16 @@
-from flask import Flask, config
+from flask import Flask
 from singleton import Singleton
-from utils import config
+import os
 
 
-redis_cred = config("REDIS_CREDENTIAL")
+redis_cred = os.getenv("redis-password")
 
 
 class FlaskFactory(metaclass=Singleton):
     def __init__(self):
         self.app = Flask("FlaskFactory")
+        self.connect_redis = f"redis://default:{redis_cred}@redis-master:6379/0"
         self.app.config.update(
-            CELERY_BROKER_URL=f"redis://default:{redis_cred}@redis-master:6379/0",
-            CELERY_RESULT_BACKEND=f"redis://default:{redis_cred}@redis-master:6379/0",
+            CELERY_BROKER_URL=self.connect_redis,
+            CELERY_RESULT_BACKEND=self.connect_redis,
         )

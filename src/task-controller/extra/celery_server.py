@@ -2,7 +2,7 @@ from k8s_job_controller import Job as k8sjob
 from job_controller import run
 from celery import Celery, Task
 from flask import Flask
-from utils import config
+import os
 
 
 def make_celery(app):
@@ -22,7 +22,7 @@ def make_celery(app):
     return celery
 
 
-redis_cred = config("REDIS_CREDENTIAL")
+redis_cred = os.getenv("redis-password")
 flask_app = Flask(__name__)
 flask_app.config.update(
     CELERY_BROKER_URL=f"redis://default:{redis_cred}@redis-master:6379/0",
