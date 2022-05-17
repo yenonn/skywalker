@@ -13,5 +13,10 @@ def executor():
     return f"task_id: {task.id}"
 
 
+@flask_app.route("/healthz", methods=["GET"])
+def healthz():
+    return "ok"
+
+
 if __name__ == "__main__":
-    flask_app.run(debug=True)
+    flask_app.run(host="0.0.0.0", debug=True)

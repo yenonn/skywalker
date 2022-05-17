@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: skywalker-executor
+  labels:
+    app: executor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: executor
+  template:
+    metadata:
+      labels:
+        app: executor
+    spec:
+      volumes:
+      - name: python-src-volume
+        configMap:
+          defaultMode: 420
+          name: skywalker-codes-configmap
+      - name: python-app-volume
+        emptyDir: {}
+      initContainers:
+      - args:
+        - base64 -d < /src/code > /tmp/func.decoded && unzip -o /tmp/func.decoded -d /app 
+        command:
+        - sh
+        - -c
+        image: skywalker/unzip:0.1
+        name: codes-preparing
+        volumeMounts:
+        - mountPath: /app
+          name: python-app-volume
+        - mountPath: /src
+          name: python-src-volume
+      containers:
+      - name: function
+        image: skywalker/executor:0.1
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        command:
+        - /bin/bash
+        - /app/start_celery.sh
+        volumeMounts:
+        - mountPath: /app
+          name: python-app-volume
+        envFrom:
+        - secretRef:
+            name: redis

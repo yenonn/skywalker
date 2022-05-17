@@ -9,6 +9,7 @@ __pycache__/
 
 # Distribution / packaging
 bin/
+docker/skywalker-configmap/app/*
 build/
 develop-eggs/
 dist/

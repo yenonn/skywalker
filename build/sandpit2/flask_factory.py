@@ -1,9 +1,10 @@
 from flask import Flask
 from singleton import Singleton
 import os
+from utils import config
 
 
-redis_cred = os.getenv("redis-password")
+redis_cred = config("redis_password")
 
 
 class FlaskFactory(metaclass=Singleton):

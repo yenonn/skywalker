@@ -15,8 +15,9 @@ Loading the modules from config.json
 
 def load_config(config):
     func_config = {}
-    if os.path.isfile(config):
-        with open(config) as jsonfile:
+    config_file = f"/app/{config}"
+    if os.path.isfile(config_file):
+        with open(config_file) as jsonfile:
             func_config = json.load(jsonfile)
     else:
         raise Exception("No /app/config.json found. Module loading is not possible.")
