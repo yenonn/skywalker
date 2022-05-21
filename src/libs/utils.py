@@ -10,15 +10,17 @@ logger = LoggerFactory().Logger
 
 """
 Loading the modules from config.json
+Merging it with given args
 """
 
 
-def load_config(config):
+def load_config(config, args):
     func_config = {}
     config_file = f"/app/{config}"
     if os.path.isfile(config_file):
         with open(config_file) as jsonfile:
             func_config = json.load(jsonfile)
+            func_config["args"] = args
     else:
         raise Exception("No /app/config.json found. Module loading is not possible.")
     return func_config
