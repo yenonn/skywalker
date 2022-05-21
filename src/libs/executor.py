@@ -18,10 +18,10 @@ class BaseExecutor(AbstractExecutor):
     def execute(self):
         raise NotImplementedError("Please implement this method")
 
-    def _loading_and_calling(self, handler):
+    def _loading_and_calling(self, handler, args):
         caller = load_module(handler)
         if caller:
-            caller()
+            caller(**args)
         else:
             logger.error("No handler is loaded and running.")
 
@@ -40,6 +40,7 @@ It accepts a config.json object.
     "name": "hello-skywalker",
     "executor": "executor.DefaultExecutor",
     "handler": "hello-skywalker.main"
+    "args": {}
 }
 """
 
@@ -53,8 +54,9 @@ class DefaultExecutor(BaseExecutor):
     def execute(self):
         name = self.func_config.get("name")
         handler = self.func_config.get("handler")
+        args = self.func_config.get("args")
         self.logger.info(f"BaseExecutor function: {name}")
-        super()._loading_and_calling(handler)
+        super()._loading_and_calling(handler, args)
 
 
 """
@@ -64,7 +66,8 @@ It accepts a config json object.
 {
     "name": "workflow-skywalker",
     "executor": "executor.WorkflowExecutor",
-    "handler": ["hello-skywalker.main", "workflow-skywalker.main"]
+    "handler": ["hello-skywalker.main", "workflow-skywalker.main"] 
+    "args": [{}, {}]
 }
 """
 
@@ -78,9 +81,11 @@ class WorkflowExecutor(BaseExecutor):
     def execute(self):
         name = self.func_config.get("name")
         handlers = self.func_config.get("handler")
+        args = self.func_config.get("args")
         self.logger.info(f"WorkflowExecutor function: {name}")
-        for handler in handlers:
-            super()._loading_and_calling(handler)
+        for (handler, arg) in zip(handlers, args):
+            self.logger.info(f"WorkflowExecutor function: {name}")
+            super()._loading_and_calling(handler, arg)
 
 
 """
@@ -91,6 +96,7 @@ It accepts a config.json object.
     "name": "activepassive-hello-skywalker",
     "executor": "executor.ActivePassiveExecutor",
     "handler": "hello-skywalker.main"
+    "args": {}
 }
 """
 
@@ -121,6 +127,7 @@ It accepts a config json object.
     "name": "activepassive-workflow-skywalker",
     "executor": "executor.ActivePassiveWorkflowExecutor",
     "handler": ["hello-skywalker.main", "workflow-skywalker.main"]
+    "args": [{}, {}]
 }
 """
 
@@ -144,12 +151,27 @@ class ActivePassiveWorkflowExecutor(WorkflowExecutor):
 
 
 """
- Main Entrypoint
+Main Entrypoint
+Accepting sample of configuration from incoming calls
+DefaultExecutor
+ {
+    "job-name": "hello-skywalker",
+    "python-codes-config": "hello-skywalker-config.json" 
+    "python-codes-args": {}
+ }
+
+WorkflowExecutor
+
+ {
+    "job-name": "workflow-skywalker",
+    "python-codes-config": "workflow-skywalker-config.json" 
+    "python-codes-args": [{}, {}]
+ }
 """
 
 
-def main_entrypoint(config):
-    func_config = load_config(config)
+def main_entrypoint(python_codes_config, python_codes_args):
+    func_config = load_config(python_codes_config, python_codes_args)
     executor_name = func_config.get("executor")
     logger.info(f"Executor: {executor_name}")
     try:

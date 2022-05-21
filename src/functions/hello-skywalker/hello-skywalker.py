@@ -2,9 +2,11 @@ from fake_elasticsearch import FakeElasticsearch
 from logger import LoggerFactory
 
 
-def main():
+def main(**kwargs):
     logger = LoggerFactory().Logger
     logger.info("hello world skywalker")
+    for var, val in kwargs.items():
+        logger.info(f"{var}: {val}")
     pi = calculate_pi()
     logger.info(f"pi: {pi}")
     es = FakeElasticsearch()
