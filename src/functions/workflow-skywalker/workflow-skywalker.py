@@ -1,6 +1,6 @@
 from logger import LoggerFactory
 
 
-def main():
+def main(**kwargs):
     logger = LoggerFactory().Logger
     logger.info("workflow skywalker")
