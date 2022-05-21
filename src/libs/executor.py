@@ -21,7 +21,7 @@ class BaseExecutor(AbstractExecutor):
     def _loading_and_calling(self, handler, args):
         caller = load_module(handler)
         if caller:
-            caller(args)
+            caller(**args)
         else:
             logger.error("No handler is loaded and running.")
 
@@ -96,6 +96,7 @@ It accepts a config.json object.
     "name": "activepassive-hello-skywalker",
     "executor": "executor.ActivePassiveExecutor",
     "handler": "hello-skywalker.main"
+    "args": {}
 }
 """
 
@@ -126,6 +127,7 @@ It accepts a config json object.
     "name": "activepassive-workflow-skywalker",
     "executor": "executor.ActivePassiveWorkflowExecutor",
     "handler": ["hello-skywalker.main", "workflow-skywalker.main"]
+    "args": [{}, {}]
 }
 """
 
