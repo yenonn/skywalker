@@ -9,6 +9,7 @@ class WorkflowSkywalker(AbstractFunction):
         self.logger.info("workflow skywalker")
 
 
+# main entry for function
 def main(**kwargs):
     WorkflowSkywalker(**kwargs).main()
 
