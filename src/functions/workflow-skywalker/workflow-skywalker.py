@@ -1,6 +1,18 @@
-from logger import LoggerFactory
+from abstract_function import AbstractFunction
+
+
+class WorkflowSkywalker(AbstractFunction):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+
+    def _proceed(self):
+        self.logger.info("workflow skywalker")
 
 
 def main(**kwargs):
-    logger = LoggerFactory().Logger
-    logger.info("workflow skywalker")
+    WorkflowSkywalker(**kwargs).main()
+
+
+if __name__ == "__name__":
+    kwargs = {}
+    WorkflowSkywalker(**kwargs).main()
