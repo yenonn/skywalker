@@ -1,6 +1,7 @@
 {
     "name": "hello-skywalker",
     "version": "0.1",
+    "enabled": true,
     "description": "Demo skywalker hello world",
     "link": "https://link_to_documentation",
     "executor": "executor.DefaultExecutor",

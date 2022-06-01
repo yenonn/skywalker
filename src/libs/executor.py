@@ -55,8 +55,10 @@ class DefaultExecutor(BaseExecutor):
         name = self.func_config.get("name")
         handler = self.func_config.get("handler")
         args = self.func_config.get("args")
+        enabled = self.func_config.get("enabled")
         self.logger.info(f"BaseExecutor function: {name}")
-        super()._loading_and_calling(handler, args)
+        if enabled:
+            super()._loading_and_calling(handler, args)
 
 
 """
@@ -82,10 +84,12 @@ class WorkflowExecutor(BaseExecutor):
         name = self.func_config.get("name")
         handlers = self.func_config.get("handler")
         args = self.func_config.get("args")
+        enabled = self.func_config.get("enabled")
         self.logger.info(f"WorkflowExecutor function: {name}")
-        for (handler, arg) in zip(handlers, args):
-            self.logger.info(f"WorkflowExecutor function: {name}")
-            super()._loading_and_calling(handler, arg)
+        if enabled:
+            for (handler, arg) in zip(handlers, args):
+                self.logger.info(f"WorkflowExecutor function: {name}")
+                super()._loading_and_calling(handler, arg)
 
 
 """
