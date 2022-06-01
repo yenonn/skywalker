@@ -4,7 +4,7 @@ __pycache__/
 
 # environment vars
 .env
-.zip
+*.zip
 # C extensions
 *.so
 
