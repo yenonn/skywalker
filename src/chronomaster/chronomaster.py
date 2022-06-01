@@ -1,22 +1,20 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-from datetime import datetime
 import os
 import json
-
-# scheduler = BlockingScheduler()
-
-
-# @scheduler.scheduled_job("interval", seconds=1)
-# def job1():
-#     print(f"job1: {datetime.now()}")
+import requests
 
 
-# @scheduler.scheduled_job("interval", seconds=2)
-# def job2():
-#     print(f"job2: {datetime.now()}")
+class Chronomaster(object):
+    url = "http://skywalker-proxy:5000"
 
+    def __init__(self):
+        self.env = os.getenv("Environment")
+        self.sched = BlockingScheduler()
+        self.job_requests = JobRequest(self.env).requests
+        self.schedules = Schedule(self.env).schedules
 
-# scheduler.start()
+    def task(self):
+        requests.post(self.url)
 
 
 class JobRequest(object):
