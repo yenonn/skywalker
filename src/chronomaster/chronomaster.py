@@ -11,6 +11,7 @@ class Chronomaster(object):
         self.env = os.getenv("Environment")
         self.sched = BlockingScheduler()
         self.job_requests = JobRequest(self.env).requests
+        self.add_jobs()
 
     def _trigger(self, data):
         requests.post(self.url, data=data, headers={"Content-Type": "Application/json"})
