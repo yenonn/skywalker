@@ -57,11 +57,7 @@ class JobRequest(object):
         job_requests = {}
         for config, schedule in self.schedules.items():
             job_name = str(config).replace("-config.json", "")
-            job = {
-                "job-name": job_name,
-                "python-codes-config": config,
-                "python-codes-args": {},
-            }
+            job = {"job-name": job_name, "python-codes-config": config}
             job_requests[config] = {**job, **schedule}
 
         return job_requests
