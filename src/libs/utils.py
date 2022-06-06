@@ -1,7 +1,6 @@
 import os
 import json
 import time
-import socket
 from importlib import import_module
 from logger import LoggerFactory
 from envparse import env
@@ -20,7 +19,9 @@ def load_config(config, args):
     if os.path.isfile(config_file):
         with open(config_file) as jsonfile:
             func_config = json.load(jsonfile)
-            func_config["args"] = args
+            # Overwrite args if given any from requests
+            if len(args):
+                func_config["args"] = args
     else:
         raise Exception("No /app/config.json found. Module loading is not possible.")
     return func_config

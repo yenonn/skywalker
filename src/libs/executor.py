@@ -49,14 +49,18 @@ class DefaultExecutor(BaseExecutor):
     def __init__(self, config):
         super().__init__()
         self.func_config = config
+        self.name = self.func_config.get("name")
+        self.handler = self.func_config.get("handler")
+        self.args = self.func_config.get("args")
+        self.enabled = self.func_config.get("enabled")
 
     @timeit
     def execute(self):
-        name = self.func_config.get("name")
-        handler = self.func_config.get("handler")
-        args = self.func_config.get("args")
-        self.logger.info(f"BaseExecutor function: {name}")
-        super()._loading_and_calling(handler, args)
+        self.logger.info(f"BaseExecutor function: {self.name}")
+        if self.enabled:
+            super()._loading_and_calling(self.handler, self.args)
+        else:
+            self.logger.warn(f"Function {self.name} is disabled.")
 
 
 """
@@ -76,16 +80,20 @@ class WorkflowExecutor(BaseExecutor):
     def __init__(self, config):
         super().__init__()
         self.func_config = config
+        self.name = self.func_config.get("name")
+        self.handlers = self.func_config.get("handler")
+        self.args = self.func_config.get("args")
+        self.enabled = self.func_config.get("enabled")
 
     @timeit
     def execute(self):
-        name = self.func_config.get("name")
-        handlers = self.func_config.get("handler")
-        args = self.func_config.get("args")
-        self.logger.info(f"WorkflowExecutor function: {name}")
-        for (handler, arg) in zip(handlers, args):
-            self.logger.info(f"WorkflowExecutor function: {name}")
-            super()._loading_and_calling(handler, arg)
+        self.logger.info(f"WorkflowExecutor function: {self.name}")
+        if self.enabled:
+            for (handler, arg) in zip(self.handlers, self.args):
+                self.logger.info(f"WorkflowExecutor function: {self.name}")
+                super()._loading_and_calling(handler, arg)
+        else:
+            self.logger.warn(f"Function {self.name} is disabled.")
 
 
 """
@@ -103,20 +111,25 @@ It accepts a config.json object.
 
 class ActivePassiveExecutor(DefaultExecutor):
     def __init__(self, config):
-        super().__init__(config)
         self.func_config = config
+        super().__init__(config)
+        self.name = self.func_config.get("name")
+        self.handler = self.func_config.get("handler")
+        self.args = self.func_config.get("args")
+        self.enabled = self.func_config.get("enabled")
 
     @timeit
     def execute(self):
-        name = self.func_config.get("name")
-        handler = self.func_config.get("handler")
-        self.logger.info(f"ActivePassiveExecutor function: {name}")
-        if check_dns():
-            super().execute()
+        self.logger.info(f"ActivePassiveExecutor function: {self.name}")
+        if self.enabled:
+            if check_dns():
+                super().execute()
+            else:
+                self.logger.info(
+                    f"Skipping execution({self.handler}) due to current DNS/CNAME is not active"
+                )
         else:
-            self.logger.info(
-                f"Skipping execution({handler}) due to current DNS/CNAME is not active"
-            )
+            self.logger.warn(f"Function {self.name} is disabled.")
 
 
 """
@@ -134,20 +147,25 @@ It accepts a config json object.
 
 class ActivePassiveWorkflowExecutor(WorkflowExecutor):
     def __init__(self, config):
-        super().__init__(config)
         self.func_config = config
+        super().__init__(config)
+        self.name = self.func_config.get("name")
+        self.handler = self.func_config.get("handler")
+        self.args = self.func_config.get("args")
+        self.enabled = self.func_config.get("enabled")
 
     @timeit
     def execute(self):
-        name = self.func_config.get("name")
-        handler = self.func_config.get("handler")
-        self.logger.info(f"ActivePassiveWorkflowExecutor function: {name}")
-        if check_dns():
-            super().execute()
+        self.logger.info(f"ActivePassiveWorkflowExecutor function: {self.name}")
+        if self.enabled:
+            if check_dns():
+                super().execute()
+            else:
+                self.logger.info(
+                    f"Skipping execution({self.handler}) due to current DNS/CNAME is not active"
+                )
         else:
-            self.logger.info(
-                f"Skipping execution({handler}) due to current DNS/CNAME is not active"
-            )
+            self.logger.warn(f"Function {self.name} is disabled.")
 
 
 """

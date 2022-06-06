@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: skywalker-codes-configmap
-data:
-  code: |
-    CODES

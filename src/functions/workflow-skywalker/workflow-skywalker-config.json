@@ -1,10 +1,16 @@
 {
     "name": "workflow-skywalker",
     "version": "0.1",
+    "enabled": true,
     "description": "Demo workflow skywalker",
     "link": "https://link_to_documentation",
     "executor": "executor.WorkflowExecutor",
     "handler": ["hello-skywalker.main", "workflow-skywalker.main"],
+<<<<<<< HEAD
     "schedule": [{"environment": "production", "cron": "@every 5m"}, {"environment": "qa", "cron": "@every 1h"}, {"environment": "development", "cron": "every 6h"}],
+=======
+    "args": [{},{}],
+    "schedule": [{"env": "production", "cron": "@every 5m"}, {"env": "qa", "cron": "@every 1h"}, {"env": "development", "cron": "every 6h"}],
+>>>>>>> main
     "support": "yenonn@gmail.com"
 }
