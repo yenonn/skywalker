@@ -5,7 +5,7 @@ import requests
 
 
 class Chronomaster(object):
-    url = "http://skywalker-proxy:5000/execute"
+    url = "http://localhost:5000/execute"
 
     def __init__(self):
         self.env = os.getenv("Environment")
@@ -14,7 +14,13 @@ class Chronomaster(object):
         self.add_jobs()
 
     def _trigger(self, data):
-        requests.post(self.url, data=data, headers={"Content-Type": "Application/json"})
+        print(data)
+        return_status = requests.post(
+            self.url,
+            data=json.dumps(data),
+            headers={"Content-Type": "application/json"},
+        )
+        print(return_status)
 
     def jobs(self):
         for config, job in self.job_requests.items():
@@ -23,9 +29,10 @@ class Chronomaster(object):
 
     def add_jobs(self):
         for job in self.jobs():
-            cron = job.get("cron")
-            job.pop("environment")
-            self.sched.add_job(self._trigger, "interval", [job], seconds=5)
+            cron_args = CronParser(job.get("cron")).parse()
+            trigger_args = {"func": self._trigger, "kwargs": {"data": job}}
+            job_args = {**cron_args, **trigger_args}
+            self.sched.add_job(**job_args)
 
     def start(self):
         self.sched.start()
@@ -51,13 +58,39 @@ class JobRequest(object):
         for config, schedule in self.schedules.items():
             job_name = str(config).replace("-config.json", "")
             job = {
-                "job_name": job_name,
+                "job-name": job_name,
                 "python-codes-config": config,
                 "python-codes-args": {},
             }
             job_requests[config] = {**job, **schedule}
 
         return job_requests
+
+
+class CronParser(object):
+    def __init__(self, cron_string):
+        self.cron = str(cron_string).strip().split()
+
+    def parse(self):
+        time_interval = self.cron[-1]
+        trigger_type = self.cron[0]
+        parse_return = {}
+        if str(trigger_type).startswith("@every"):
+            parse_return["trigger"] = "interval"
+
+        if str(time_interval).endswith("s"):
+            # seconds
+            time_value = int(time_interval.replace("s", ""))
+            parse_return["seconds"] = time_value
+        elif str(time_interval).endswith("m"):
+            # minutes
+            time_value = int(time_interval.replace("m", ""))
+            parse_return["minutes"] = time_value
+        elif str(time_interval).endswith("h"):
+            # hours
+            time_value = int(time_interval.replace("h", ""))
+            parse_return["hours"] = time_value
+        return parse_return
 
 
 class Schedule(object):
