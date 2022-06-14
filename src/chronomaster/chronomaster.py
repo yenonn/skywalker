@@ -14,17 +14,14 @@ class Chronomaster(object):
         self.add_jobs()
 
     def _trigger(self, data):
-        print(data)
-        return_status = requests.post(
+        requests.post(
             self.url,
             data=json.dumps(data),
             headers={"Content-Type": "application/json"},
         )
-        print(return_status)
 
     def jobs(self):
         for config, job in self.job_requests.items():
-            print(f"Fetching job - {config}")
             yield job
 
     def add_jobs(self):
