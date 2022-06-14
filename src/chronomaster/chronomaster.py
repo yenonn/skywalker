@@ -21,7 +21,7 @@ class Chronomaster(object):
         )
 
     def jobs(self):
-        for config, job in self.job_requests.items():
+        for _, job in self.job_requests.items():
             yield job
 
     def add_jobs(self):
