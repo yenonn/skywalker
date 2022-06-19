@@ -1,4 +1,4 @@
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from singleton import Singleton
 import os
 import json
@@ -15,7 +15,7 @@ class Chronomaster(metaclass=Singleton):
 
     def __init__(self):
         self.env = os.getenv("Environment")
-        self.sched = BlockingScheduler()
+        self.sched = BackgroundScheduler()
         self.job_requests = JobRequest(self.env).requests
         self.add_jobs()
 
@@ -33,7 +33,11 @@ class Chronomaster(metaclass=Singleton):
     def add_jobs(self):
         for job in self.jobs():
             cron_args = CronParser(job.get("cron")).parse()
-            trigger_args = {"func": self._trigger, "kwargs": {"data": job}}
+            trigger_args = {
+                "func": self._trigger,
+                "kwargs": {"data": job},
+                "id": job.get("job-name"),
+            }
             job_args = {**cron_args, **trigger_args}
             self.sched.add_job(**job_args)
 
