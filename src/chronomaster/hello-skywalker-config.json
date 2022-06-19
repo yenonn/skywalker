@@ -1,0 +1,12 @@
+{
+    "name": "hello-skywalker",
+    "version": "0.1",
+    "enabled": true,
+    "description": "Demo skywalker hello world",
+    "link": "https://link_to_documentation",
+    "executor": "executor.DefaultExecutor",
+    "handler": "hello-skywalker.main",
+    "args": {"name": "HEY!! hello-skywalker"},
+    "schedule": [{"environment": "production", "cron": "@every 5s"}, {"environment": "qa", "cron": "@every 1h"}, {"environment": "development", "cron": "every 6h"}],
+    "support": "yenonn@gmail.com"
+}
