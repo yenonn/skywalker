@@ -5,6 +5,11 @@ import json
 import requests
 
 
+class ChronomasterUi(object):
+    def _init__(self):
+        pass
+
+
 class Chronomaster(metaclass=Singleton):
     url = "http://localhost:5000/execute"
 

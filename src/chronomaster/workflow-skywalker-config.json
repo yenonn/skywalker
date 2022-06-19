@@ -7,6 +7,6 @@
     "executor": "executor.WorkflowExecutor",
     "handler": ["hello-skywalker.main", "workflow-skywalker.main"],
     "args": [{"name": "HEY!!! workflow skywalker"}, {}],
-    "schedule": [{"environment": "production", "cron": "@every 5s"}, {"environment": "qa", "cron": "@every 1h"}, {"environment": "development", "cron": "every 6h"}],
+    "schedule": [{"environment": "production", "cron": "@every 5s", "cron-enabled": true}, {"environment": "qa", "cron": "@every 1h", "cron-enabled": true}, {"environment": "development", "cron": "every 6h", "cron-enabled": true}],
     "support": "yenonn@gmail.com"
 }
