@@ -55,7 +55,7 @@ class JobRequest(object):
         job_requests = {}
         for config, schedule in self.schedules.items():
             job_name = str(config).replace("-config.json", "")
-            job = {"job-name": job_name, "python-codes-config": config}
+            job = {"job-name": job_name}
             job_requests[config] = {**job, **schedule}
 
         return job_requests
@@ -101,9 +101,14 @@ class Schedule(object):
     def find_schedules(self):
         schedules = {}
         for file in self.function_configs:
+            schedule_details = {}
+            schedule_details["python-codes-config"] = file
             with open(file) as jsonfile:
                 data = json.load(jsonfile)
+                if data.get("args"):
+                    schedule_details["python-codes-args"] = data.get("args")
                 for sched in data.get("schedule"):
                     if sched.get("environment") == self.env:
-                        schedules[file] = sched
+                        schedule_details.update(sched)
+            schedules[file] = schedule_details
         return schedules
