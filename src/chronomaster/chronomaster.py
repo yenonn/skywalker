@@ -1,10 +1,11 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
+from singleton import Singleton
 import os
 import json
 import requests
 
 
-class Chronomaster(object):
+class Chronomaster(metaclass=Singleton):
     url = "http://localhost:5000/execute"
 
     def __init__(self):
