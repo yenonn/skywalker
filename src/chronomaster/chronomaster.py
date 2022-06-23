@@ -14,7 +14,7 @@ class Chronomaster(metaclass=Singleton):
     url = "http://localhost:5000/execute"
 
     def __init__(self):
-        self.env = os.getenv("Environment")
+        self.env = os.getenv("environment")
         self.sched = BackgroundScheduler()
         self.job_requests = JobRequest(self.env).requests
         self.add_jobs()
@@ -121,3 +121,8 @@ class Schedule(object):
                         schedule_details.update(sched)
             schedules[file] = schedule_details
         return schedules
+
+
+if __name__ == "__main__":
+    c = Chronomaster()
+    c.start()
