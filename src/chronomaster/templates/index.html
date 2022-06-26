@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to Chronomaster{% endblock %}</h1>
+    status <span class="badge badge-primary">{{ posts['state'] }}</span> 
+    <hr class="dotted">
+    <a class="navbar-brand" href="{{ url_for('start') }}">start</a>
+    <a class="navbar-brand" href="{{ url_for('stop') }}">stop</a>
+{% endblock %}

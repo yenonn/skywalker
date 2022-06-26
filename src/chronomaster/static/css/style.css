@@ -1,0 +1,12 @@
+h1 {
+    border: 2px #eee solid;
+    color: brown;
+    text-align: center;
+    padding: 10px;
+}
+
+
+/* Dotted border */
+hr.dotted {
+  border-top: 3px dotted #bbb;
+}

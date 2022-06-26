@@ -5,11 +5,6 @@ import json
 import requests
 
 
-class ChronomasterUi(object):
-    def _init__(self):
-        pass
-
-
 class Chronomaster(metaclass=Singleton):
     url = "http://localhost:5000/execute"
 
@@ -18,6 +13,8 @@ class Chronomaster(metaclass=Singleton):
         self.sched = BackgroundScheduler()
         self.job_requests = JobRequest(self.env).requests
         self.add_jobs()
+        if self.state() == "idle":
+            self.sched.start()
 
     def _trigger(self, data):
         requests.post(
@@ -41,17 +38,17 @@ class Chronomaster(metaclass=Singleton):
             job_args = {**cron_args, **trigger_args}
             self.sched.add_job(**job_args)
 
-    def start(self):
-        self.sched.start()
-
     def stop(self):
-        self.sched.shutdown()
+        if self.state() == "running":
+            self.sched.pause()
 
-    def pause(self):
-        self.sched.pause()
+    def start(self):
+        if self.state() == "stop":
+            self.sched.resume()
 
-    def resume(self):
-        self.sched.resume()
+    def state(self):
+        state = {0: "idle", 1: "running", 2: "stop"}
+        return state.get(self.sched.state)
 
 
 class JobRequest(object):
