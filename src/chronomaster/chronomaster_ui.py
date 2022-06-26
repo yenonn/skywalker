@@ -3,13 +3,11 @@ from chronomaster import Chronomaster
 
 app = Flask("chronomaster")
 c = Chronomaster()
-response = {}
 
 
 @app.route("/")
 def index():
-    response["state"] = c.state()
-    return render_template("index.html", posts=response)
+    return render_template("index.html", posts={"state": c.state()})
 
 
 @app.route("/start")
