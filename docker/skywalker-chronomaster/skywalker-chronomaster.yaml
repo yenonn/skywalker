@@ -44,7 +44,7 @@ spec:
           value: "production"
         command:
         - /bin/python
-        - /app/chronomaster.py
+        - /app/chronomaster_ui.py
         volumeMounts:
         - mountPath: /app
           name: python-app-volume
