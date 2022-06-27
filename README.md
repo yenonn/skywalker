@@ -11,4 +11,4 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 
 ## Contributors
 This projects exists thanks to all the people who contributed. 
-<a href="https://github.com/yenonn/skywalker/contributors"></a>
+<a href="https://github.com/yenonn/skywalker/contributors">here</a>
