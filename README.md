@@ -4,4 +4,4 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 
 ![Alt text](docs/images/skywalker.drawio.png)
 
-##How to use it
+## How to use it
