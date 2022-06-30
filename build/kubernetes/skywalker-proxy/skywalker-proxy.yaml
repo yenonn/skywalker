@@ -1,15 +1,24 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment 
 metadata:
-  name: python-job
+  name: skywalker-proxy
+  labels:
+    app: proxy
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
   template:
+    metadata:
+      labels:
+        app: proxy
     spec:
       volumes:
       - name: python-src-volume
         configMap:
           defaultMode: 420
-          name: python-codes-configmap
+          name: skywalker-codes-configmap
       - name: python-app-volume
         emptyDir: {}
       initContainers:
@@ -27,12 +36,16 @@ spec:
           name: python-src-volume
       containers:
       - name: function
-        image: python 
+        image: skywalker/core:0.1
+        env:
+        - name: PYTHONPATH
+          value: "/app"
         command: 
         - python
-        - /app/hello.py
+        - /app/web.py
         volumeMounts:
         - mountPath: /app
           name: python-app-volume
-      restartPolicy: Never
-  backoffLimit: 4
+        envFrom:
+        - secretRef:
+            name: redis
