@@ -6,15 +6,16 @@ import requests
 
 
 class Chronomaster(metaclass=Singleton):
-    url = "http://localhost:5000/execute"
+    url = "http://proxy-service:5000/execute"
 
     def __init__(self):
         self.env = os.getenv("environment")
         self.sched = BackgroundScheduler()
         self.job_requests = JobRequest(self.env).requests
         self.add_jobs()
-        if self.state() == "idle":
+        if not self.sched.running:
             self.sched.start()
+            self.sched.get_jobs()
 
     def _trigger(self, data):
         requests.post(
@@ -23,12 +24,8 @@ class Chronomaster(metaclass=Singleton):
             headers={"Content-Type": "application/json"},
         )
 
-    def jobs(self):
-        for _, job in self.job_requests.items():
-            yield job
-
     def add_jobs(self):
-        for job in self.jobs():
+        for _, job in self.job_requests.items():
             cron_args = CronParser(job.get("cron")).parse()
             trigger_args = {
                 "func": self._trigger,
@@ -118,8 +115,3 @@ class Schedule(object):
                         schedule_details.update(sched)
             schedules[file] = schedule_details
         return schedules
-
-
-if __name__ == "__main__":
-    c = Chronomaster()
-    c.start()

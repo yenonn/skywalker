@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for
 from chronomaster import Chronomaster
 
-app = Flask("chronomaster")
+app = Flask(__name__)
 c = Chronomaster()
 
 
@@ -23,4 +23,4 @@ def stop():
 
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", 5001, debug=False)
+    app.run("0.0.0.0", 5050)

@@ -43,8 +43,8 @@ spec:
         - name: environment
           value: "production"
         command:
-        - /bin/python
-        - /app/chronomaster_ui.py
+        - /bin/bash
+        - /app/start_chronomaster.sh
         volumeMounts:
         - mountPath: /app
           name: python-app-volume

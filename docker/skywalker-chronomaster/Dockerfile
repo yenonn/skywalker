@@ -3,4 +3,3 @@ ENV PYTHONPATH /app
 RUN mkdir /app /install
 ADD requirements.txt /install
 RUN pip install -r /install/requirements.txt
-ENTRYPOINT /bin/python /app/chronomaster_ui.py
