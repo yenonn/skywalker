@@ -36,7 +36,7 @@ spec:
           name: python-src-volume
       containers:
       - name: function
-        image: skywalker/chronomaster:0.1
+        image: skywalker/core:0.1
         env:
         - name: PYTHONPATH
           value: "/app"

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: executor
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: executor
@@ -36,7 +36,7 @@ spec:
           name: python-src-volume
       containers:
       - name: function
-        image: skywalker/executor:0.1
+        image: skywalker/core:0.1
         env:
         - name: PYTHONPATH
           value: "/app"
