@@ -24,6 +24,14 @@ class Chronomaster(metaclass=Singleton):
             headers={"Content-Type": "application/json"},
         )
 
+    def get_job_details(self):
+        jobs_details = []
+        for config in self.job_requests.keys():
+            with open(config) as config_file:
+                data = json.load(config_file)
+                jobs_details.append(data)
+        return jobs_details
+
     def add_jobs(self):
         for _, job in self.job_requests.items():
             cron_args = CronParser(job.get("cron")).parse()
