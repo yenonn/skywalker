@@ -7,7 +7,9 @@ c = Chronomaster()
 
 @app.route("/")
 def index():
-    return render_template("index.html", posts={"state": c.state()})
+    return render_template(
+        "index.html", posts={"state": c.state(), "job_details": c.get_job_details()}
+    )
 
 
 @app.route("/start")
