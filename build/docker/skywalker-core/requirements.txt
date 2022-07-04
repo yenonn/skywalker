@@ -1,6 +1,5 @@
 APScheduler>=3.9.1
 celery>=5.2.6
-elasticsearch>=8.1.2
 envparse>=0.2.0
 Flask>=2.1.1
 kubernetes>=23.3.0
