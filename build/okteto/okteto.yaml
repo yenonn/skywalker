@@ -1,0 +1,11 @@
+name: env-${USER}
+namespace: default
+image:
+imagePullPolicy: Always
+autocreate: true
+workdir: /app
+command: bash
+volumes:
+  = /root/.vscode-server
+persistentVolume:
+  enabled: true
