@@ -1,11 +1,11 @@
 name: env-${USER}
 namespace: default
-image:
+image: hiuyenonn/skywalker-okteto:latest
 imagePullPolicy: Always
 autocreate: true
 workdir: /app
 command: bash
 volumes:
-  = /root/.vscode-server
+  - /root/.vscode-server
 persistentVolume:
-  enabled: true
+  enabled: false
