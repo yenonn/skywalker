@@ -2,3 +2,4 @@ APScheduler>=3.9.1
 celery>=5.2.6
 Flask>=2.1.1
 kubernetes>=23.3.0
+flower>=1.0.0
