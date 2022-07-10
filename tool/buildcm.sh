@@ -1,7 +1,10 @@
 #!/bin/bash
-rm -fr *.zip
-rm -fr app/*
-basedir="../../.."
+if -f *.zip
+then
+    rm -fr *.zip
+    rm -fr app/*
+fi
+basedir="../"
 find $basedir/src -type f -name *.pyc -delete
 find $basedir/src -type f  -not -name "*.css" -not -name "*.html"| xargs -I{} cp {} app/
 cp -fr $basedir/src/chronomaster/static app/

@@ -1,7 +1,7 @@
 {
     "name": "workflow-skywalker",
     "version": "0.1",
-    "enabled": true,
+    "enabled": false,
     "description": "Demo workflow skywalker",
     "link": "https://link_to_documentation",
     "executor": "executor.WorkflowExecutor",

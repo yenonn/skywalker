@@ -13,7 +13,8 @@ __pycache__/
 bin/
 /build/docker/skywalker-configmap/app/*
 /build/docker/skywalker-configmap/*.zip
-/tool/clean_redis.sh
+/tool/app/*
+/tool/*.zip
 develop-eggs/
 dist/
 eggs/
