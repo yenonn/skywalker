@@ -35,6 +35,16 @@ spec:
         - mountPath: /src
           name: python-src-volume
       containers:
+      - name: reloader
+        image: skywalker/core:0.1
+        command:
+        - /usr/local/bin/python
+        - /app/configmap_reloader.py
+        volumeMounts:
+        - mountPath: /app
+          name: python-app-volume
+        - mountPath: /src
+          name: python-src-volume
       - name: function
         image: skywalker/core:0.1
         env:
@@ -46,8 +56,6 @@ spec:
         volumeMounts:
         - mountPath: /app
           name: python-app-volume
-        - mountPath: /src
-          name: python-src-volume
         envFrom:
         - secretRef:
             name: redis

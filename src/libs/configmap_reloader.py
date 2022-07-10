@@ -2,6 +2,7 @@ import base64
 import os
 import zipfile
 import hashlib
+import time
 
 
 def md5sum_changed(path="/src/code"):
@@ -23,7 +24,6 @@ def md5sum_changed(path="/src/code"):
 
 
 def reload_configmap(path="/src/code"):
-    print("Reloading python codes ...")
     decoded_file = "/tmp/func.decoded"
     if os.path.exists(path):
         with open(path, "r") as encoded_file, open(
@@ -37,5 +37,7 @@ def reload_configmap(path="/src/code"):
 
 
 if __name__ == "__main__":
-    if md5sum_changed():
-        reload_configmap()
+    while True:
+        time.sleep(10)
+        if md5sum_changed():
+            reload_configmap()
