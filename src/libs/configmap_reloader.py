@@ -3,6 +3,7 @@ import os
 import zipfile
 import hashlib
 import time
+import glob
 
 
 def md5sum_changed(path="/src/code"):
@@ -31,6 +32,9 @@ def reload_configmap(path="/src/code"):
         ) as decode_zipfile:
             decoded_bytes = base64.b64decode(encoded_file.read())
             decode_zipfile.write(decoded_bytes)
+        app_files = [f for f in glob.glob("/app/*") if os.path.isfile(f)]
+        for f in app_files:
+            os.remove(f)
         with zipfile.ZipFile(decoded_file, "r") as zf:
             zf.extractall("/app")
         os.remove(decoded_file)
