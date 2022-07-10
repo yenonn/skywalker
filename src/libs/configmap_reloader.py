@@ -3,7 +3,7 @@ import os
 import zipfile
 
 
-def reload_python_codes(path="/src/code"):
+def reload_configmap(path="/src/code"):
     decoded_file = "/tmp/func.decoded"
     if os.path.exists(path):
         with open(path, "r") as encoded_file, open(
@@ -17,4 +17,4 @@ def reload_python_codes(path="/src/code"):
 
 
 if __name__ == "__main__":
-    reload_python_codes()
+    reload_configmap()
