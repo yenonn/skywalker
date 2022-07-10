@@ -43,6 +43,14 @@ class Chronomaster(metaclass=Singleton):
             job_args = {**cron_args, **trigger_args}
             self.sched.add_job(**job_args)
 
+    def remove_jobs(self):
+        self.sched.remove_all_jobs()
+
+    def reload(self):
+        self.job_requests = JobRequest(self.env).requests
+        self.remove_jobs()
+        self.add_jobs()
+
     def stop(self):
         if self.state() == "running":
             self.sched.pause()
@@ -59,7 +67,7 @@ class Chronomaster(metaclass=Singleton):
 class JobRequest(object):
     def __init__(self, env):
         self.env = env
-        self.schedules = Schedule(self.env).schedules
+        self.schedules = Schedule(self.env).find_schedules()
         self.requests = self.job_requests()
 
     def job_requests(self):
@@ -102,7 +110,7 @@ class Schedule(object):
     def __init__(self, env):
         self.env = env
         self.function_configs = self.find_configs()
-        self.schedules = self.find_schedules()
+        # self.schedules = self.find_schedules()
 
     def find_configs(self):
         path = os.getcwd()

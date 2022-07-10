@@ -24,5 +24,11 @@ def stop():
     return redirect(url_for("index"))
 
 
+@app.route("/reload")
+def reload():
+    c.reload()
+    return redirect(url_for("index"))
+
+
 if __name__ == "__main__":
     app.run("0.0.0.0", 5050)
