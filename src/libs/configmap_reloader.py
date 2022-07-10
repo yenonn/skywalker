@@ -13,8 +13,6 @@ def md5sum_changed(path="/src/code"):
             md5sum_file.write(md5sum_src)
     else:
         md5sum_out = open(md5sum_out_path, "r").read()
-    print(f"md5sum_src: {md5sum_src}")
-    print(f"md5sum_out: {md5sum_out}")
     if md5sum_src == md5sum_out:
         return False
     else:
