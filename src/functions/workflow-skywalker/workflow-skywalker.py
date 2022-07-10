@@ -3,6 +3,7 @@ from abstract_function import AbstractFunction
 
 class WorkflowSkywalker(AbstractFunction):
     def __init__(self, **kwargs):
+        AbstractFunction.__init__(self)
         self.kwargs = kwargs
 
     def _proceed(self):
