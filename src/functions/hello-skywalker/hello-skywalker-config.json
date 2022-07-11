@@ -7,6 +7,6 @@
     "executor": "executor.DefaultExecutor",
     "handler": "hello-skywalker.main",
     "args": {"name": "HEY!! hello-skywalker"},
-    "schedule": [{"environment": "production", "cron": "@every 5s", "cron-enabled": true}, {"environment": "qa", "cron": "@every 1h", "cron-enabled": true}, {"environment": "development", "cron": "every 6h", "cron-enabled": true}],
+    "schedule": [{"environment": "production", "cron": "@every 10s", "cron-enabled": true}, {"environment": "qa", "cron": "@every 1h", "cron-enabled": true}, {"environment": "development", "cron": "every 6h", "cron-enabled": true}],
     "support": "yenonn@gmail.com"
 }

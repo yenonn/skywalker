@@ -23,7 +23,7 @@ spec:
         emptyDir: {}
       initContainers:
       - args:
-        - base64 -d < /src/code > /tmp/func.decoded && unzip -o /tmp/func.decoded -d /app 
+        - base64 -d < /src/code > /tmp/func.decoded && unzip -o /tmp/func.decoded -d /app && chown -R 999 /app
         command:
         - sh
         - -c
