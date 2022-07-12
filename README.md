@@ -30,7 +30,7 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 * The options to control how to run a function is self-explanatory. 
 * There are types of executors to run function, namely `executor.DefaultExecutor`, `executor.WorkflowExecutor`, `executor.ActivePassiveExecutor`, and `executor.ActivePassiveWorkflowExecutor`.
 * `schedule` defines that interval of function executor, and it is scheduled in `@every` syntax at certain second `s`, minute `m` and hour `h`
-* `enabled` is a toggle to enable and disable a function from scheduled and execute.
+* `enabled` is a toggle to enable and disable a function from being scheduled and executed.
 * There are services that you need to know, e.g. `chronomaster` service at port `5050`. You can port forward the service and tap in a web GUI.
 * From here, you can `start`, `stop` and `reload` the `chronomaster` service.
 * Function codes is updated by updating its configmap. `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
