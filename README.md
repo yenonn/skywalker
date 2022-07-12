@@ -21,7 +21,7 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 * All of your function codes are located at `src/functions`. Thy are are examples that you can refer to e.g `hello-skywalker`.
 * Before starting skywalker, you have to load the function codes onto a configmap. By that, you need to go to `tool` directory and run the `./buildcm.sh`. 
 * With that, it will find all the python codes with src directory and load them onto a configmap, namely `python-configmap-codes`.
-* Once you are done, now you can start skywalker, go to `tool` directory and run `run_skywalker.sh`.
+* Once you are done, now you can start skywalker, go to `tool` directory and run `start_skywalker.sh`.
 ### More details about Skywalker
 * From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` option derived from each function config.json file, then make a schedule for execution.
 * By then, `skywalker-chronomaster` submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend redis.
