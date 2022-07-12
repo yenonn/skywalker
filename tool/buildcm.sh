@@ -2,7 +2,7 @@
 if -f *.zip
 then
     rm -fr *.zip
-    rm -fr app/*
+    rm -fr app
 fi
 basedir="../"
 find $basedir/src -type f -name *.pyc -delete
