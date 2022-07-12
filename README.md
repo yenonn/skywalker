@@ -33,7 +33,7 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 * `enabled` is a toggle to enable and disable a function from being scheduled and executed.
 * There are services that you need to know, e.g. `chronomaster` service at port `5050`. You can port forward the service and tap in a web GUI.
 * From here, you can `start`, `stop` and `reload` the `chronomaster` service.
-* Function codes is updated by updating its configmap. `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
+* Function codes is updated by updating its configmap. The codes from `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
 ## Contributors
 This projects exists thanks to all the people who contributed. 
 <a href="https://github.com/yenonn/skywalker/contributors">here</a>
