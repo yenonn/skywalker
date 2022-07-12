@@ -23,7 +23,7 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 * Once you are done, now you can start skywalker, go to `tool` directory and run `run_skywalker.sh`.
 ### More details about Skywalker
 * From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` option derived from each function config.json file, then make a schedule for execution.
-* By then, chronomaster submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend redis.
+* By then, `skywalker-chronomaster` submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend redis.
 * With all the tasks scheduled, `skywalker-executor` picks up the task and execute function as per defines from a config.json.
 * Each function comes with a config.json file. For reference, you can look at this `src/functions/hello-skywalker/hello-skywalker-config.json`
 * Each function comes with a set of config files. e.g. (./src/functions/hello-skywalker/hello-skywalker-config.json), these options is meant for controlling how to execute a function, usually is self-explanatory. 
