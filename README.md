@@ -1,6 +1,10 @@
 # Skywalker
 ## Notice
-This is a python framework to host python functions(Faas) in kubernetes environment. Skywalker is making use of celery and flask framework to achieve the goal. Here is the architecture diagram showing the high level overview of the project. 
+Inspired by `kubeless` and `nuclio`, this is a python framework to host python functions(Faas) in a microservice environment. Skywalker is making use of celery and flask framework to achieve the goal.
+Up to your imagination and creativity, you can code a python function and host it on kubernetes cluster. Skywalker will help to schedule the execution at your preferences times slots.
+At any times, when you are running high loads, you can always scaling up the execution by doubling the executors. Hope you like it, and enjoy!
+
+Here is the architecture diagram showing the high level overview of the project. 
 
 ![Alt text](docs/images/skywalker.drawio.png)
 
