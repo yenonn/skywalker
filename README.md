@@ -22,7 +22,7 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 * With that, it will find all the python codes with src directory and load them onto a configmap, namely `python-configmap-codes`.
 * Once you are done, now you can start skywalker, go to `tool` directory and run `run_skywalker.sh`.
 ### Q&A
-* From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` option derived from each function config.json file.
+* From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` option derived from each function config.json file, then make a schedule for execution.
 * By then, it submits an async HTTP request to `skywalker-proxy`. `skywalker-proxy` receives the request and submit a `celery` task and persists onto backend redis.
 * With all the tasks pending, celery will schedule and `skywalker-executor` to run function as per defines from the function config.json.
 * Each function comes with a config.json files. For reference, you can look at this `src/functions/hello-skywalker/hello-skywalker-config.json`
@@ -31,6 +31,9 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 * There are types of executors to run function, namely `executor.DefaultExecutor`, `executor.WorkflowExecutor`, `executor.ActivePassiveExecutor`, and `executor.ActivePassiveWorkflowExecutor`.
 * `schedule` defines that interval of function executor, and it is scheduled in `@every` syntax at certain second `s`, minute `m` and hour `h`
 * `enabled` is a toggle to enable and disable a function from scheduled and execute.
+* There are services that you need to know, e.g. `chronomaster` service at port `5050`. You can port forward the service and tap in a web GUI.
+* From here, you can `start`, `stop` and `reload` the `chronomaster` service.
+* Function codes is updated by updating its configmap. `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
 ## Contributors
 This projects exists thanks to all the people who contributed. 
 <a href="https://github.com/yenonn/skywalker/contributors">here</a>
