@@ -6,14 +6,15 @@ This is a python framework to host python functions(Faas) in kubernetes environm
 
 ## Getting Started
 ### Prerequisite
-* minikube
-* docker
+* Minikube
+* Docker
 * Helm
+* Redis
 ### Setup
-* Create your minikube cluster. Considering the base requirement of a minikube cluster, you can simply `minikube start` to create a kubernetes cluster locally.
-* You have to do a redis cluster by running command. `helm install redis bitnami/redis`. Then monitor the redis pod until pod are fully up and running.
-* Before you can go ahead and compile the docker image, please make sure that you are using the registr from minikube `eval $(minikube docker-env)`.
-* Once all setup, you can start working on your image. Go to `build/images` directory, and you will find three base images.
+* Create your minikube cluster. Considering the base requirement of a minikube cluster, you can simply run `minikube start` to create a kubernetes cluster locally.
+* You have to install a redis cluster by running command `helm install redis bitnami/redis`. Then monitor the redis pod until pod are fully up and running.
+* Before you can go ahead and compile the docker image, please make sure that you are using the registry from minikube. With that you can run `eval $(minikube docker-env)`.
+* Once all setup, you can start working on your image. Go to `build/images` directory, and you will find three base images, `skywalker-python`, `skywalker-unzip` and `skywalker-core`.
 * At once, please go into each image and run `./build.sh`.
 * At last, you will have three different images, namely, `skywalker/python`, `skywalker/unzip`, `skywalker/core`.
 * At `build/k8s`, you will find all the kubernetes yaml files for `skywalker-chronomaster`, `skywalker-executor` and `skywalker-proxy`.
