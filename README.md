@@ -1,10 +1,12 @@
 # Skywalker
 ## Notice
-Inspired by `kubeless`, `openfaas` and `nuclio`, this is a python framework to host python functions (Faas) in a microservice environment. Skywalker is making use of `celery` and `flask` framework to achieve the goal.
-Up to your imagination and creativity really, you can code a python function and host it on kubernetes cluster. Skywalker will help to schedule the execution at your preferences times slots.
-What makes Skywalker differs from others, it generalised the execution of function. Codes that hosted in the configmap could be scheduled and runs in any executors. 
-With this idea in mind, you will not be hassled deploying new kubernetes resources, when a new function is deployed. The best use case will be a monitoring system that runs periodically, detecting abnormalies from system and trigger alerts. 
-At any times, when you are running high loads, you can always scaling up the execution by doubling the executors. Hope you like it, and enjoy!
+* Inspired by `kubeless`, `openfaas` and `nuclio`, this is yet another python framework to host python functions (Faas) in a microservice environment. Skywalker is making use of `celery` and `flask` framework to achieve the goal.
+Up to your imagination and creativity really, you can code a python function and host it on any of your kubernetes environments. 
+
+* Skywalker hosts the function and helps to schedule the execution at your preferences times slots. What makes Skywalker differs from others, it generalised the execution of function. Codes that hosted in the configmap could be scheduled and runs in any executors. 
+With this idea in mind, you will not be hassled deploying new kubernetes resources, when a new function is deployed.
+
+* The best use case will be a monitoring system that runs periodically, detecting abnormalies from system and trigger alerts. At any times, when you are running high loads, you can always scaling up the execution by doubling the executors. Hope you like it, and enjoy!
 
 Here is the architecture diagram showing the high level overview of the project. 
 
