@@ -27,7 +27,7 @@ Here is the architecture diagram showing the high level overview of the project.
 * Once all setup, you can start working on your image. Go to `build/images` directory, and you will find three base images, `skywalker-python`, `skywalker-unzip` and `skywalker-core`.
 * At once, please go into each image and run `./build.sh`.
 * At last, you will have three different images, namely, `skywalker/python`, `skywalker/unzip`, `skywalker/core`.
-* At `build/k8s`, you will find all the kubernetes yaml files for `skywalker-chronomaster`, `skywalker-executor` and `skywalker-proxy`. You can apply those yaml file with your standard kubernetes command.
+* At `build/k8s`, you will find all the kubernetes yaml files for `skywalker-chronomaster`, `skywalker-executor` and `skywalker-proxy`. You can apply those yaml files with your standard kubernetes command.
 * All of your function codes are located at `src/functions`. They are are examples that you can refer to e.g `hello-skywalker` and `workflow-skywalker`.
 * Before starting skywalker, you have to load the function codes onto a configmap. By that, you need to go to `tool` directory and run the `./buildcm.sh`. 
 * With that, it will find all the python codes with `src` directory and load them onto a configmap, namely `python-configmap-codes`.
