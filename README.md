@@ -34,7 +34,6 @@ Here is the architecture diagram showing the high level overview of the project.
 * From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` option derived from each function config.json file, then make a schedule for execution.
 * By then, `skywalker-chronomaster` submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend redis.
 * With all the tasks scheduled, `skywalker-executor` picks up the task and execute function as per defines from a config.json.
-* Each function comes with a config.json file. For reference, you can look at this `src/functions/hello-skywalker/hello-skywalker-config.json`
 * Each function comes with a set of config files. e.g. `src/functions/hello-skywalker/hello-skywalker-config.json`, these options is meant for controlling how to execute a function, usually is self-explanatory. 
 * There are types of executors to run function, namely `executor.DefaultExecutor`, `executor.WorkflowExecutor`, `executor.ActivePassiveExecutor`, and `executor.ActivePassiveWorkflowExecutor`.
 * `handler` and `args` working in pairs. `handler` is a list of function entry point, whereas `args` is the argument list that passed into a function.
