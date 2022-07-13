@@ -27,23 +27,23 @@ Here is the architecture diagram showing the high level overview of the project.
 * Once all setup, you can start working on your image. Go to `build/images` directory, and you will find three base images, `skywalker-python`, `skywalker-unzip` and `skywalker-core`.
 * At once, please go into each image and run `./build.sh`.
 * At last, you will have three different images, namely, `skywalker/python`, `skywalker/unzip`, `skywalker/core`.
-* At `build/k8s`, you will find all the kubernetes yaml files for `skywalker-chronomaster`, `skywalker-executor` and `skywalker-proxy`.
-* All of your function codes are located at `src/functions`. Thy are are examples that you can refer to e.g `hello-skywalker`.
+* At `build/k8s`, you will find all the kubernetes yaml files for `skywalker-chronomaster`, `skywalker-executor` and `skywalker-proxy`. You can apply those yaml file with your standard kubernetes command.
+* All of your function codes are located at `src/functions`. They are are examples that you can refer to e.g `hello-skywalker` and `workflow-skywalker`.
 * Before starting skywalker, you have to load the function codes onto a configmap. By that, you need to go to `tool` directory and run the `./buildcm.sh`. 
-* With that, it will find all the python codes with src directory and load them onto a configmap, namely `python-configmap-codes`.
-* Once you are done, now you can start skywalker, go to `tool` directory and run `start_skywalker.sh`.
+* With that, it will find all the python codes with `src` directory and load them onto a configmap, namely `python-configmap-codes`.
+* It is now all set. You are good to go.
 ### More details about Skywalker
 * From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` options derived from each function config.json file, then make a schedule for execution.
-* By then, `skywalker-chronomaster` submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend redis.
+* By then, `skywalker-chronomaster` submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend `redis`.
 * With all the tasks scheduled, `skywalker-executor` picks up the tasks and executes function as per defines from a config.json.
 * Each function comes with a set of config file. e.g. `src/functions/hello-skywalker/hello-skywalker-config.json`, these options are meant for controlling how to execute a function and when to execute a function, usually is self-explanatory. 
-* There are types of executors to run function, namely `executor.DefaultExecutor`, `executor.WorkflowExecutor`, `executor.ActivePassiveExecutor`, and `executor.ActivePassiveWorkflowExecutor`.
+* There are types of executors to run function, namely `executor.DefaultExecutor`, `executor.WorkflowExecutor`, `executor.ActivePassiveExecutor`, and `executor.ActivePassiveWorkflowExecutor`. These various types of executor controlling the way how a function should be executed.
 * `handler` and `args` working in pairs. `handler` is a list of function entry point, whereas `args` is the argument list that passed into a function.
-* `schedule` defines that interval of function executor, and it is scheduled in `@every` syntax at certain second `s`, minute `m` and hour `h`
+* `schedule` defines that interval of function execution, and it is scheduled in `@every` syntax at certain second `s`, minute `m` and hour `h`
 * `enabled` is a toggle to enable and disable a function from being scheduled and executed.
 * There is a service that you need to know, e.g. `chronomaster` service at port `5050`. You can port forward the service and tap in a web GUI.
-* From here, you can `start`, `stop` and `reload` the `chronomaster` service.
-* Function codes is updated by updating its configmap. The codes from `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
+* From here, it provides you a chance to `start`, `stop` and `reload` the `chronomaster` scheduler.
+* Function codes is updated by updating its configmap via `./tool/buildcm.sh` script. The codes from `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
 ## Contributors
 This projects exists thanks to all the people who contributed. 
 <a href="https://github.com/yenonn/skywalker/contributors">here</a>
