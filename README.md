@@ -45,5 +45,5 @@ Here is the architecture diagram showing the high level overview of the project.
 * From here, it provides you a chance to `start`, `stop` and `reload` the `chronomaster` scheduler.
 * Function codes is updated by updating its configmap via `./tool/buildcm.sh` script. The codes from `skywalker-executor` and `skywalker-chronomaster` will automatically updated by a sidecar `reloader`. However, there are chances after some schedule updates, you need to `reload` the config from the chronomaster GUI.
 ## Contributors
-This projects exists thanks to all the people who contributed. 
+Feedback is mostly welcome. Please contact me at <yenonn@gmail.com>. This projects exists thanks to all the people who contributed. 
 <a href="https://github.com/yenonn/skywalker/contributors">here</a>
