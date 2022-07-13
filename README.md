@@ -6,7 +6,9 @@ Up to your imagination and creativity really, you can code a python function and
 * Skywalker hosts the function and helps to schedule the execution at your preferences times slots. What makes Skywalker differs from others, it generalised the execution of function. Codes that hosted in the configmap could be scheduled and runs in any executors. 
 With this idea in mind, you will not be hassled deploying new kubernetes resources, when a new function is deployed.
 
-* The best use case will be a monitoring system that runs periodically, detecting abnormalies from system and trigger alerts. At any times, when you are running high loads, you can always scaling up the execution by doubling the executors. Hope you like it, and enjoy!
+* The best use case will be a monitoring system that runs periodically, detecting abnormalies from system and trigger alerts. At any times, when you are running high loads, you can always scaling up the execution by doubling the executors. 
+
+* Hope you like it, and enjoy!
 
 Here is the architecture diagram showing the high level overview of the project. 
 
@@ -31,10 +33,10 @@ Here is the architecture diagram showing the high level overview of the project.
 * With that, it will find all the python codes with src directory and load them onto a configmap, namely `python-configmap-codes`.
 * Once you are done, now you can start skywalker, go to `tool` directory and run `start_skywalker.sh`.
 ### More details about Skywalker
-* From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` option derived from each function config.json file, then make a schedule for execution.
+* From the architecture point of view, `skywalker-chronomaster` acts as the trigger. It reads the `schedule` options derived from each function config.json file, then make a schedule for execution.
 * By then, `skywalker-chronomaster` submits async HTTP requests to `skywalker-proxy`. `skywalker-proxy` receives the request and submit `celery` tasks and persists onto backend redis.
-* With all the tasks scheduled, `skywalker-executor` picks up the task and execute function as per defines from a config.json.
-* Each function comes with a set of config files. e.g. `src/functions/hello-skywalker/hello-skywalker-config.json`, these options is meant for controlling how to execute a function, usually is self-explanatory. 
+* With all the tasks scheduled, `skywalker-executor` picks up the tasks and executes function as per defines from a config.json.
+* Each function comes with a set of config files. e.g. `src/functions/hello-skywalker/hello-skywalker-config.json`, these options are meant for controlling how to execute a function and when to execute a function, usually is self-explanatory. 
 * There are types of executors to run function, namely `executor.DefaultExecutor`, `executor.WorkflowExecutor`, `executor.ActivePassiveExecutor`, and `executor.ActivePassiveWorkflowExecutor`.
 * `handler` and `args` working in pairs. `handler` is a list of function entry point, whereas `args` is the argument list that passed into a function.
 * `schedule` defines that interval of function executor, and it is scheduled in `@every` syntax at certain second `s`, minute `m` and hour `h`
