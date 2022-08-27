@@ -87,7 +87,7 @@ def config(key: str):
         return os.getenv(key)
 
 
-def ts_to_dt(timestamp):
+def convert_ts_to_dt(timestamp):
     if isinstance(timestamp, datetime.datetime):
         return timestamp
     dt = dateutil.parser.parse(timestamp)
@@ -97,7 +97,7 @@ def ts_to_dt(timestamp):
     return dt
 
 
-def dt_to_ts(dt):
+def convert_dt_to_ts(dt):
     if not isinstance(dt, datetime.datetime):
         print("Expected datetime, got %s" % (type(dt)))
         return dt
@@ -111,7 +111,7 @@ def dt_to_ts(dt):
     return ts.replace("000+00:00", "Z").replace("+00:00", "Z")
 
 
-def ts_to_dt_with_format(timestamp, ts_format):
+def enrich_ts_to_dt_with_format(timestamp, ts_format):
     if isinstance(timestamp, datetime.datetime):
         return timestamp
     dt = datetime.datetime.strptime(timestamp, ts_format)
@@ -121,7 +121,7 @@ def ts_to_dt_with_format(timestamp, ts_format):
     return dt
 
 
-def dt_to_ts_with_format(dt, ts_format):
+def enrich_dt_to_ts_with_format(dt, ts_format):
     if not isinstance(dt, datetime.datetime):
         print("Expected datetime, got %s" % (type(dt)))
         return dt
@@ -133,16 +133,16 @@ def ts_now():
     return datetime.datetime.utcnow().replace(tzinfo=dateutil.tz.tzutc())
 
 
-def ts_utc_to_tz(ts, tz_name):
+def convert_ts_utc_to_tz(ts, tz_name):
     """Convert utc time to local time."""
     return ts.astimezone(dateutil.tz.gettz(tz_name))
 
 
 def inc_ts(timestamp, milliseconds=1):
     """Increment a timestamp by milliseconds."""
-    dt = ts_to_dt(timestamp)
+    dt = convert_ts_to_dt(timestamp)
     dt += datetime.timedelta(milliseconds=milliseconds)
-    return dt_to_ts(dt)
+    return convert_dt_to_ts(dt)
 
 
 def pretty_ts(timestamp, tz=True, ts_format=None):
@@ -151,7 +151,7 @@ def pretty_ts(timestamp, tz=True, ts_format=None):
     Format: YYYY-MM-DD HH:MM TZ"""
     dt = timestamp
     if not isinstance(timestamp, datetime.datetime):
-        dt = ts_to_dt(timestamp)
+        dt = convert_ts_to_dt(timestamp)
     if tz:
         dt = dt.astimezone(dateutil.tz.tzlocal())
     if ts_format is None:
@@ -162,4 +162,4 @@ def pretty_ts(timestamp, tz=True, ts_format=None):
 
 def ts_add(ts, td):
     """Allows a timedelta (td) add operation on a string timestamp (ts)"""
-    return dt_to_ts(ts_to_dt(ts) + td)
+    return convert_dt_to_ts(convert_ts_to_dt(ts) + td)
