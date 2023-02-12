@@ -7,7 +7,7 @@ logger = LoggerFactory().Logger
 
 class AbstractExecutor(ABC):
     @abstractmethod
-    def execute():
+    def execute(self):
         raise NotImplementedError("Please implement this method")
 
 
